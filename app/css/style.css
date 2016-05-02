@@ -1,0 +1,8 @@
+#divEnter{
+	background-color:rgb(200,200,200);
+	left:50%;top:40%;
+	position:absolute;
+	transform:translateY(-50%) translateX(-50%);
+	padding:10px;
+	font-family:"Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+}

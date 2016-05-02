@@ -56,7 +56,7 @@ def all_image():
     map_path=data['map_path']
     var_setting['map_path']=map_path
     pass_type=['png','jpg','bmp','gif']
-    listdir=[name for name in os.listdir(map_path) if name.split('.')[-1].lower() in pass_type]
+    listdir=['map/'+name for name in os.listdir(map_path) if name.split('.')[-1].lower() in pass_type]
     return json.dumps(listdir)
 
 

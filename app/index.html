@@ -2,15 +2,25 @@
 <html>
 	<head>
 		<meta charset="utf8">
+		<title>gallery</title>
 		<script src="js/requests.js"></script>
+		<script src="js/cookie.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body style="background-color:rgb(238,243,250)">
-		<div id="divEnter" style="margin:auto;width:42em;background-color:rgb(200,200,200)">
-			<p>Please give a path to open APP</p>
+		<div id="divEnter">
+			<p>Please give a local folder path or load some local image to start APP</p>
+			<p>if you use local folder,it will saved on cookie and then next you would not need to load it again.</p>
 			<div>
-				<label for="textMapPath">map path</label><input type="text" id="textMapPath" style="width:300px">
+				<label for="textMapPath">map path</label><br><input type="text" id="textMapPath" style="width:300px">
 			</div>
 			<button id="btnEnter">Load</button>
+			<br>
+			<br>
+			<div>
+				<label for="inputFile">local images</label><br><input type="file" multiple="true" id="inputFile">
+			</div>
+			<button id="btnLoadImage">Load</button>
 		</div>
 		<div id="divApp" style="display:none">
 			<div style="margin:auto;width:42em">

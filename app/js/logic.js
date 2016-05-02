@@ -16,7 +16,7 @@ function runToTrue(callback,timeout){
 
 function runToAbort(callback,interval){
 	var id=setInterval(callback,interval);
-	console.log('register',id);
+	//console.log('register',id);
 	return function(){
 		console.log('clear',id);
 		clearInterval(id);
@@ -36,40 +36,10 @@ var btnEnter=document.getElementById('btnEnter');
 var divEnter=document.getElementById('divEnter');
 var divApp=document.getElementById('divApp');
 var btnReset=document.getElementById('btnReset');
+var inputFile=document.getElementById('inputFile');
+var btnLoadImage=document.getElementById('btnLoadImage');
 
 
-cookie=(function(){
-	// cookie('a') -> cookie a attr value
-	// cookie('a',123) will set cookie a attr value to 123
-	if (!document.cookie){
-		document.cookie=JSON.stringify({});
-	}
-	
-	var dict=JSON.parse(document.cookie);
-	
-	function attr(attr,value){
-		if(attr){
-			if(value){
-				dict[attr]=value;
-				document.cookie=JSON.stringify(dict);
-			}
-			else{
-				
-				return dict[attr];
-			}
-		}
-		else{
-			return dict;
-		}
-	}
-	
-	function clear(){
-		dict={};
-		document.cookie=JSON.stringify(dict);
-	}
-	
-	return {attr:attr,clear:clear};
-})();
 
 var selectedPath=true;
 if(cookie.attr('map_path')){
@@ -89,6 +59,20 @@ btnEnter.onclick=function(){
 	setup();
 };
 
+btnLoadImage.onclick=function(){
+	var files=inputFile.files;
+	var i;
+	var urls=[];
+	for(var i=0;i<files.length;i++){
+		urls.push(URL.createObjectURL(files[i]));
+	}
+	var res={content:JSON.stringify(urls)}
+	//console.log(res);
+	divApp.style.display='block';
+	divEnter.style.display='none';
+	setup(res);
+}
+
 if(selectedPath){
 	divApp.style.display='block';
 	divEnter.style.display='none';
@@ -102,7 +86,7 @@ window.onbeforeunload=function(){
 	})
 }
 
-function setup(){
+function setup(res){
 	
 	btnResetFinally=[];
 	
@@ -116,9 +100,7 @@ function setup(){
 		divEnter.style.display='block';
 	}
 	
-	
-
-	requests.post('allImagePath.json',cookie.attr(),function(res){
+	function setup2(res){
 		//console.log(res);
 		var allPath=JSON.parse(res.content);
 		var rd=(function (){
@@ -131,17 +113,20 @@ function setup(){
 				if(i>=length){
 					i=0;
 				}
-				return allPath[i] && 'map/'+allPath[i];
+				return allPath[i];
+				//return allPath[i] && 'map/'+allPath[i];
 			};
 			function prevImage(){
 				i-=1;
 				if(i<0){
 					i=length-1;
 				}
-				return allPath[i] && 'map/'+allPath[i];
+				return allPath[i];
+				//return allPath[i] && 'map/'+allPath[i];
 			}
 			function nowImage(){
-				return allPath[i] && 'map/'+allPath[i];
+				return allPath[i];
+				//return allPath[i] && 'map/'+allPath[i];
 			}
 			function nextImageRepeater(){
 				//console.log(i);
@@ -149,7 +134,8 @@ function setup(){
 				if(i>=end){
 					i=start;
 				}
-				return allPath[i] && 'map/'+allPath[i];
+				return allPath[i];
+				//return allPath[i] && 'map/'+allPath[i];
 			}
 			function setStart(value){
 				start=value || i;
@@ -254,5 +240,12 @@ function setup(){
 		
 		//init
 		updateImage(nowImage());
-	})
+	}
+	
+	if(!res){
+		requests.post('allImagePath.json',cookie.attr(),setup2);
+	}
+	else{
+		setup2(res);
+	}
 }
