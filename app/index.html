@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+		<script src="js/requests.js"></script>
+	</head>
+	<body style="background-color:rgb(238,243,250)">
+		<div id="divEnter" style="margin:auto;width:42em;background-color:rgb(200,200,200)">
+			<p>Please give a path to open APP</p>
+			<div>
+				<label for="textMapPath">map path</label><input type="text" id="textMapPath" style="width:300px">
+			</div>
+			<button id="btnEnter">Load</button>
+		</div>
+		<div id="divApp" style="display:none">
+			<div style="margin:auto;width:42em">
+				<img id="img" >
+				<!-- <input type="file" multiple="true"> -->
+				<div style="margin:auto;width:200px">
+					<button id="btnPrev">prev</button>
+					<button id="btnPlay">play</button>
+					<button id="btnNext">next</button>
+				</div>
+				<div style="margin:auto;width:500px">
+					<button id="btnSetStart">start</button>
+					<button id="btnRepeat">repeat</button>
+					<label for="textInterval">interval</label><input type="text" id="textInterval" value="1000"></button>
+				</div>
+				<div>
+					<button id="btnReset">reset map path</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/logic.js"></script>
+</html>
